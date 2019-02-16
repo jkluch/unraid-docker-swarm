@@ -10,14 +10,17 @@ Add the scripts in here to a folder somewhere.  You could use a **/tmp/something
 **step2.sh** is based on the second half of https://github.com/CHBMB/Unraid-DVB/blob/master/build_scripts/kernel-compile-module.sh
 
 # Process:
+## Step 1
 Run the following to see what modules need to be enabled  
 `curl https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh > check-config.sh`  
 `bash ./check-config.sh`  
 You'll want to definitely enable all modules under required.  I enabled a handful that are optional too for no other reason than just because.
 
+## Step 2
 Run  
 `./step1.sh`
 
+## Step 3
 Run  
 `cd kernel`  
 `make clean`  
@@ -46,11 +49,17 @@ I skipped these modules:
 CONFIG_CGROUP_HUGETLB  
 CONFIG_NF_NAT_FTP
 
+### Tip:
+You can verify the modules you need are enabled in your new config by running `check-config.sh` against `/kernel/.config`  
+something like this:  
+`~/check-config.sh /mnt/user/appdata/kernel-modding/kernel/.config`
+
+## Step 4
 Run  
 `./step2.sh`  
 Ignore the "Cannot find LILO." error: https://serverfault.com/a/383704
 
-# Final Step
+## Step 5
 After **step2.sh** is run IIRC you have to manually go in and move your new `bzmodules` and `bzimage` files from `<unraid-version>/stock` to `/boot` backup the `bzmodules` and `bzimage` files already in `/boot` first.  Then you want to reboot your machine and you should be good to go.
 
 # For modifying bzroot
